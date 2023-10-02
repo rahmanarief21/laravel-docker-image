@@ -13,7 +13,7 @@ services:
         - UID=${UID:-1000}
         - GID=${GID:-1000}
     ports:
-      - "80:80"
+      - "8080:80"
     volumes:
       - ./src:/var/www/html:delegated
     depends_on:
@@ -37,6 +37,9 @@ services:
       MYSQL_ROOT_PASSWORD: secret
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
+    volumes:
+      - ./mysql:/var/lib/mysql
+      - ./dockerfiles/mysql:/etc/mysql
     networks:
       - laravel
 
@@ -51,6 +54,8 @@ services:
       - "9000:9000"
     volumes:
       - ./src:/var/www/html:delegated
+      - ./php/ini/memory_limit.ini:/usr/local/etc/php/conf.d/memory_limit.ini
+      - ./php/ini/upload_size.ini:/usr/local/etc/php/conf.d/upload_size.ini
     networks:
       - laravel
 
