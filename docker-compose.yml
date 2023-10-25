@@ -58,7 +58,16 @@ services:
       - ./php/ini/upload_size.ini:/usr/local/etc/php/conf.d/upload_size.ini
     networks:
       - laravel
-
+  supervisor:
+    build:
+      context: ./dockerfiles
+      dockerfile: supervisor.dockerfile
+    container_name: supervisor
+    volumes:
+      - ./src:/var/www/html
+      - ./php/ini/memory_limit.ini:/usr/local/etc/php/conf.d/memory_limit.ini
+    networks:
+      - laravel
   redis:
     image: redis:alpine
     restart: unless-stopped
