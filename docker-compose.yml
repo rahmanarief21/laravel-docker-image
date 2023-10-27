@@ -62,6 +62,9 @@ services:
     build:
       context: ./dockerfiles
       dockerfile: supervisor.dockerfile
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
     container_name: supervisor
     volumes:
       - ./src:/var/www/html
