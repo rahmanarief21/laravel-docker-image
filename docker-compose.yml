@@ -58,6 +58,7 @@ services:
       - ./php/ini/upload_size.ini:/usr/local/etc/php/conf.d/upload_size.ini
     networks:
       - laravel
+
   supervisor:
     build:
       context: ./dockerfiles
@@ -66,11 +67,14 @@ services:
         - UID=${UID:-1000}
         - GID=${GID:-1000}
     container_name: supervisor
+    ports:
+      - "6001:6001"
     volumes:
       - ./src:/var/www/html
       - ./php/ini/memory_limit.ini:/usr/local/etc/php/conf.d/memory_limit.ini
     networks:
       - laravel
+
   redis:
     image: redis:alpine
     restart: unless-stopped
@@ -101,7 +105,7 @@ services:
     ports:
       - "3000:3000"
       - "3001:3001"
-      - "5173:5173"
+      - "5174:5173"
     working_dir: /var/www/html
     entrypoint: [ 'npm' ]
     networks:

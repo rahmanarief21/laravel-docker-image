@@ -21,6 +21,10 @@ RUN apk update && apk add --no-cache supervisor
 
 RUN mkdir -p "/etc/supervisor/logs"
 
+COPY ./cron/crontab.txt /var/crontab.txt
+RUN crontab /var/crontab.txt
+# RUN chmod 600 /var/crontab
+
 COPY ./supervisor/supervisord.conf /etc/supervisor/supervisord.conf
 
 CMD ["/usr/bin/supervisord", "-n", "-c",  "/etc/supervisor/supervisord.conf"]
